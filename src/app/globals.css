@@ -1,0 +1,16 @@
+@import "tailwindcss";
+
+:root {
+  --neon-accent: #C2B897; /* Matches the muted khaki/beige SCYTE signature */
+  --oak-green: #1B261D; /* Deep, muted oak green */
+}
+
+@theme inline {
+  --color-neon-accent: var(--neon-accent);
+  --color-oak-green: var(--oak-green);
+}
+
+body {
+  background-color: var(--oak-green);
+  color: #ffffff;
+}
