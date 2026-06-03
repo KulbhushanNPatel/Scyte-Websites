@@ -181,7 +181,6 @@ export default function HeroScrollSequence() {
         end: "+=" + (window.innerHeight * (totalSlides * 0.8 + 1.5)), // Added 1.5 for the portal dive
         pin: true,
         scrub: true,
-        snap: { snapTo: "labels", duration: 0.2, delay: 0, ease: "expo.out" },
         invalidateOnRefresh: true,
       }
     });
@@ -295,13 +294,15 @@ export default function HeroScrollSequence() {
 
     masterTl.addLabel("portal-complete");
 
+    const dissolveStart = "portal-dive+=1.5"; // Overlap with the portal zoom for a fluid transition
+
     // Phase 2: The Dissolve Effect (Signature Fade In)
     masterTl.to("#signature-layer", {
       opacity: 1,
       pointerEvents: "auto",
       ease: "power2.inOut",
-      duration: 1
-    }, "dissolve");
+      duration: 1.5
+    }, dissolveStart);
 
     // Phase 3: The Signature Reveal
     masterTl.to([bladeOneRef.current, bladeTwoRef.current, bladeThreeRef.current], {
@@ -310,26 +311,26 @@ export default function HeroScrollSequence() {
       ease: 'power4.out',
       duration: 1.5,
       stagger: 0.1
-    }, "dissolve+=0.5");
+    }, dissolveStart + "+=0.5");
 
     masterTl.to(signatureWrapperRef.current, {
       autoAlpha: 1,
       duration: 0.1 
-    }, "dissolve+=0.7");
+    }, dissolveStart + "+=0.7");
 
-    masterTl.to(marqueeFadeRef.current, { opacity: 0.5, duration: 1, ease: "power2.out" }, "dissolve+=0.7");
+    masterTl.to(marqueeFadeRef.current, { opacity: 0.5, duration: 1, ease: "power2.out" }, dissolveStart + "+=0.7");
 
     masterTl.to(pathRef.current, {
       strokeDashoffset: 0,
       ease: 'power2.inOut',
       duration: 1.5
-    }, "dissolve+=0.7");
+    }, dissolveStart + "+=0.7");
 
     masterTl.to(svgRef.current, {
       scale: 1.1,
       ease: 'power1.out',
       duration: 0.5
-    }, "dissolve+=2.2");
+    }, dissolveStart + "+=2.2");
 
   }, { scope: masterContainerRef });
 
