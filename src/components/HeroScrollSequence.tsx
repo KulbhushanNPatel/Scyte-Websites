@@ -11,6 +11,16 @@ if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger, useGSAP);
 }
 
+const getAssetPath = (path: string) => {
+  if (typeof window !== 'undefined') {
+    if (window.location.hostname.includes('github.io') || window.location.pathname.startsWith('/Scyte-Websites')) {
+      return `/Scyte-Websites${path}`;
+    }
+  }
+  const basePath = process.env.__NEXT_ROUTER_BASEPATH || '';
+  return `${basePath}${path}`;
+};
+
 export default function HeroScrollSequence() {
   const [isLoading, setIsLoading] = useState(true);
   const [loadedVideos, setLoadedVideos] = useState(0);
@@ -89,11 +99,11 @@ export default function HeroScrollSequence() {
   }, { dependencies: [readyToExit] });
 
   const projects = [
-    { name: "BORN & BRED", src: "/WhatsApp Video 2026-05-29 at 8.00.45 PM.mp4" },
-    { name: "PANDAPAY", src: "/WhatsApp Video 2026-05-29 at 8.00.45 PM (1).mp4" },
-    { name: "MATE LIBRE", src: "/WhatsApp Video 2026-05-29 at 8.00.49 PM.mp4" },
-    { name: "MAKING STUDIO", src: "/WhatsApp Video 2026-05-29 at 8.00.50 PM.mp4" },
-    { name: "AIM", src: "/WhatsApp Video 2026-05-29 at 8.00.50 PM (1).mp4" }
+    { name: "BORN & BRED", src: "/Laptop_videos/Vid 1.mp4" },
+    { name: "PANDAPAY", src: "/Laptop_videos/Vid 2.mp4" },
+    { name: "MATE LIBRE", src: "/Laptop_videos/Vid 3.mp4" },
+    { name: "MAKING STUDIO", src: "/Laptop_videos/Vid 4.mp4" },
+    { name: "AIM", src: "/Laptop_videos/Vid 5.mp4" }
   ];
 
   const projectWords = ["BRUTAL.", "SMOOTH.", "SPATIAL.", "FLUID.", "DYNAMIC."];
@@ -407,7 +417,7 @@ export default function HeroScrollSequence() {
             <video 
               key={`bg-vid-${i}`}
               className={`bg-video-blur absolute inset-0 w-full h-full object-cover blur-3xl scale-110 opacity-0 z-0 bg-vid-${i}`}
-              src={proj.src} poster={(proj as any).poster} autoPlay loop muted playsInline preload="auto"
+              src={getAssetPath(proj.src)} poster={(proj as any).poster} autoPlay loop muted playsInline preload="auto"
             />
           ))}
         </div>
@@ -435,7 +445,7 @@ export default function HeroScrollSequence() {
                 <div id="screen-slider-track" ref={trackRef} className="absolute inset-0 h-full flex w-max will-change-transform">
                   {projects.map((proj, i) => (
                     <div key={"screen-slide-" + i} className="screen-slide relative w-[calc(85vw-8px)] md:w-[calc(65vw-16px)] max-w-[1084px] h-full flex-shrink-0 bg-black">
-                      <video className="w-full h-full object-cover" src={proj.src} poster={(proj as any).poster} autoPlay loop muted playsInline preload={i === 0 ? "auto" : "none"} onLoadedData={() => setLoadedVideos(prev => prev + 1)} />
+                      <video className="w-full h-full object-cover" src={getAssetPath(proj.src)} poster={(proj as any).poster} autoPlay loop muted playsInline preload={i === 0 ? "auto" : "none"} onLoadedData={() => setLoadedVideos(prev => prev + 1)} />
                     </div>
                   ))}
                 </div>
